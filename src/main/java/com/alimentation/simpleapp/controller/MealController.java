@@ -8,6 +8,9 @@ import com.alimentation.simpleapp.repository.FoodRepository;
 import com.alimentation.simpleapp.repository.UserRepository;
 import com.alimentation.simpleapp.service.MealPlanningService;
 import com.alimentation.simpleapp.service.NutritionCalculator;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -99,6 +102,7 @@ public class MealController {
 
     // 5. Récupérer les aliments d'un repas
     @GetMapping("/{id}/foods")
+    @Transactional
     public ResponseEntity<Set<Food>> getMealFoods(@PathVariable Long id) {
         return mealRepository.findById(id)
                 .map(meal -> ResponseEntity.ok(meal.getFoods()))
@@ -157,6 +161,7 @@ public class MealController {
     }
     // Dans MealController.java
     @GetMapping("/{id}/total-calories")
+    @Transactional
     public ResponseEntity<Double> getTotalCalories(@PathVariable Long id) {
     return mealRepository.findById(id)
             .map(meal -> {

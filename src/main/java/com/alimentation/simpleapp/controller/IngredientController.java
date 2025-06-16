@@ -79,10 +79,11 @@ public class IngredientController {
     // 5. Récupérer les aliments d'un ingrédient
     @GetMapping("/{id}/foods")
     public ResponseEntity<Set<Food>> getFoodsByIngredient(@PathVariable Long id) {
-        return ingredientRepository.findById(id)
+        return ingredientRepository.findWithFoodsById(id)
                 .map(ingredient -> ResponseEntity.ok(ingredient.getFoods()))
                 .orElse(ResponseEntity.notFound().build());
     }
+    
 
     // 6. Supprimer un ingrédient
     @DeleteMapping("/{id}")
